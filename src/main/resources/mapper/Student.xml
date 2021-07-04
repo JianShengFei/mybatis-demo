@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ash.mybatis.mapper.StudentMapper">
+
+    <insert id="insert" parameterType="Student">
+        INSERT INTO student
+            (name, age, sex, address, create_time, update_time)
+            value
+            (#{name}, #{age}, #{sex}, #{address}, #{createTime}, #{updateTime})
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from student where id = #{id}
+    </delete>
+    
+    <update id="updateById" parameterType="Student">
+        UPDATE student
+            <set>
+
+            </set>
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="list" resultType="Student">
+        select * from student
+    </select>
+</mapper>

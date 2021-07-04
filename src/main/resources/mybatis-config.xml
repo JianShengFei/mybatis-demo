@@ -4,12 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <!-- 根标签 -->
 <configuration>
-    <properties>
-        <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/mybatis-test?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true"/>
-        <property name="username" value="root"/>
-        <property name="password" value="1213123123"/>
-    </properties>
+
+    <properties resource="jdbc-config.properties"/>
+
+    <settings>
+        <!-- 打印sql日志 -->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
+
+    <!-- 别名 -->
+    <typeAliases>
+        <package name="com.ash.mybatis.entity"/>
+    </typeAliases>
 
     <!-- 环境，可以配置多个，default：指定采用哪个环境 -->
     <environments default="test">
@@ -19,10 +25,10 @@
             <transactionManager type="JDBC" />
             <!-- 数据源，池类型的数据源 -->
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.cj.jdbc.Driver" /> <!-- 配置了properties，所以可以直接引用 -->
-                <property name="url" value="jdbc:mysql://localhost:3306/mybatis-test?characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=UTC&amp;rewriteBatchedStatements=true" />
-                <property name="username" value="root" />
-                <property name="password" value="1213123123" />
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
             </dataSource>
         </environment>
 <!--        <environment id="development">-->
@@ -38,11 +44,10 @@
 <!--        </environment>-->
     </environments>
 
-
-
     <mappers>
         <mapper resource="mapper/UserMapper.xml"/>
         <mapper resource="mapper/PersonMapper.xml"/>
+        <mapper resource="mapper/Student.xml"/>
     </mappers>
 
 </configuration>
